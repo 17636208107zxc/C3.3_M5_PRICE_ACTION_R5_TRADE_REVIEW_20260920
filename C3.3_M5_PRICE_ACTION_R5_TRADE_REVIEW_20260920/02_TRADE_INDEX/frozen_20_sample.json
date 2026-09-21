@@ -1,0 +1,25 @@
+{
+  "status": "FROZEN_BEFORE_CHART_OR_MECHANICAL_QUALITY_REVIEW",
+  "selection_inputs": [
+    "Route",
+    "BUY/SELL",
+    "A1/A2",
+    "WIN/LOSS",
+    "same setup count",
+    "MFE>=2 then stop",
+    "signal-to-fill delay",
+    "tactical context",
+    "entry extension in R using signal close and actual fill"
+  ],
+  "excludes_from_selection": [
+    "manual chart judgment",
+    "mechanical signal verdict",
+    "mechanical plan verdict"
+  ],
+  "source_sha256": {
+    "combined_virtual_trades.csv": "A718A18843D80EA1D15DEECCE5B0CB9BA1036352E2ECE0D9FA98C9503A816168",
+    "route_candidate_timeline.csv": "DAC378E6648565A3264199129D2BF1651270AC7BC18A6F2B3FE90A4212F2E9B2"
+  },
+  "sample_count": 20,
+  "sample_csv_sha256": "622C2E15724256858AC6E43AFF36DE3EB89C95F77D27B2DC21ED11DA15F3FEF9"
+}

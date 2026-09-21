@@ -1,0 +1,50 @@
+{
+  "source": "MetaTrader5 copy_rates_range",
+  "terminal_company": "Doo Technology Singapore Pte. Ltd.",
+  "terminal_name": "Doo Technology MetaTrader 5",
+  "server": "DooTechnology-Demo",
+  "symbol": "XAUUSD.s",
+  "time_interpretation": "MT5 epoch rendered as UTC; matches tester TimeToString bar labels",
+  "terminal_path": "C:\\MT5\\EAAI_V3103_Tester_20260828\\Doo Technology MetaTrader 5",
+  "exported_at": "2026-09-20T23:03:01+08:00",
+  "periods_with_three_day_buffer": [
+    {
+      "from": "2025-02-26T00:00:00+00:00",
+      "to": "2025-04-04T00:00:00+00:00"
+    },
+    {
+      "from": "2025-03-29T00:00:00+00:00",
+      "to": "2025-05-04T00:00:00+00:00"
+    },
+    {
+      "from": "2025-08-29T00:00:00+00:00",
+      "to": "2025-10-04T00:00:00+00:00"
+    },
+    {
+      "from": "2026-02-26T00:00:00+00:00",
+      "to": "2026-04-04T00:00:00+00:00"
+    },
+    {
+      "from": "2026-04-28T00:00:00+00:00",
+      "to": "2026-06-04T00:00:00+00:00"
+    },
+    {
+      "from": "2026-07-29T00:00:00+00:00",
+      "to": "2026-09-04T00:00:00+00:00"
+    }
+  ],
+  "files": {
+    "XAUUSD_s_M5_DooTechnology.csv": {
+      "bars": 31205,
+      "first": "2025.04.23 16:25:00",
+      "last": "2026.09.03 23:55:00",
+      "sha256": "C5E9A2F1261BAE97913F333FEBC5A61F52F196C2EFC919806B57CD82DF5EC2DE"
+    },
+    "XAUUSD_s_M15_DooTechnology.csv": {
+      "bars": 14058,
+      "first": "2025.02.26 01:00:00",
+      "last": "2026.09.03 23:45:00",
+      "sha256": "5978E1047E5C0CC0F8B7CB059F0451D2FFDC80D40D890B0BAFFC3AFA36DBF796"
+    }
+  }
+}

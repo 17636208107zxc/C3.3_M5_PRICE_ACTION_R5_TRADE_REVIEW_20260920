@@ -1,0 +1,5 @@
+﻿route,direction,trades,wins,losses,net_usd,avg_mfe_r,avg_mae_r,target_first,sl_first
+A_HEALTHY_FIRST_RESUME,BUY,23,5,18,-297.18,1.3248,-0.8660,5,18
+A_HEALTHY_FIRST_RESUME,SELL,47,11,36,-149.74,1.6572,-0.8678,11,36
+B_COMPLEX_H2_L2,BUY,15,4,11,116.94,1.4815,-0.8272,4,11
+B_COMPLEX_H2_L2,SELL,14,1,13,-448.80,1.2541,-1.1348,1,13

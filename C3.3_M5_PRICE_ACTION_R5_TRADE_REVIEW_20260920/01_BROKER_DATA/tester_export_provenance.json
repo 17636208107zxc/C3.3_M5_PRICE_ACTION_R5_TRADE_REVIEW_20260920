@@ -1,0 +1,96 @@
+{
+  "source": "MT5 Strategy Tester CopyRates export from the same portable terminal and symbol as R5",
+  "terminal_company": "Doo Technology Singapore Pte. Ltd.",
+  "terminal_name": "Doo Technology MetaTrader 5",
+  "server": "DooTechnology-Demo",
+  "symbol": "XAUUSD.s",
+  "terminal_executable": "C:\\MT5\\EAAI_V3103_Tester_20260828\\Doo Technology MetaTrader 5\\terminal64.exe",
+  "time_interpretation": "Tester server bar labels; exported with TimeToString and matched to R5 logs",
+  "exporter": {
+    "source_file": "D:\\Backup\\Documents\\EAAI\\C3.3_M5_PRICE_ACTION_R5_TRADE_REVIEW_20260920\\01_BROKER_DATA\\EXPORTER\\R5ReviewBarExporter.mq5",
+    "source_sha256": "8676264F35BBA8E5024067C78A86CA3C2FF69FBCA1E94A5411CAD92E0352F403",
+    "compile_result": "0 errors, 0 warnings",
+    "trade_api": "none; exporter only calls CopyRates/FileWrite and returns INIT_FAILED after export"
+  },
+  "files": {
+    "2025_APRIL_M15.csv": {
+      "bars": 2208,
+      "first": "2025.03.28 23:45:00",
+      "last": "2025.05.02 23:30:00",
+      "sha256": "9434AF989570E31CF3B7EAFC49A33E2C7904042799D99D0BAD3BDED78283102E"
+    },
+    "2025_APRIL_M5.csv": {
+      "bars": 6624,
+      "first": "2025.03.28 23:55:00",
+      "last": "2025.05.02 23:50:00",
+      "sha256": "9209FA116FA4272665886E00949BF56D625CE53B25BA46953D55711687763E08"
+    },
+    "2025_MARCH_M15.csv": {
+      "bars": 2484,
+      "first": "2025.02.25 23:45:00",
+      "last": "2025.04.03 23:30:00",
+      "sha256": "AC5D0278279AE106802FC7AA426B49DF030BEB25C783F3CA90773158DDB9DF02"
+    },
+    "2025_MARCH_M5.csv": {
+      "bars": 7452,
+      "first": "2025.02.25 23:55:00",
+      "last": "2025.04.03 23:50:00",
+      "sha256": "3CCC73470B26F4543F3114CFCA5EA4EDC335EC16AE726989E170C49E30B75BC3"
+    },
+    "2025_SEPTEMBER_M15.csv": {
+      "bars": 2383,
+      "first": "2025.08.28 23:45:00",
+      "last": "2025.10.03 23:30:00",
+      "sha256": "79EF276B33187DADE79D70503D3AF509165FCF13445696F32F282A29595BB9A7"
+    },
+    "2025_SEPTEMBER_M5.csv": {
+      "bars": 7147,
+      "first": "2025.08.28 23:55:00",
+      "last": "2025.10.03 23:50:00",
+      "sha256": "08583C0D781D89C5D045CD65AC8D95FFC0EBE8ED611BD48F54EA7BB4D3FA3425"
+    },
+    "2026_MARCH_M15.csv": {
+      "bars": 2392,
+      "first": "2026.02.25 23:45:00",
+      "last": "2026.04.02 23:30:00",
+      "sha256": "02473F28261E5B7E26D2BFC4D4D9FC703676A14C37C808AB40CB831CECDCFA0A"
+    },
+    "2026_MARCH_M5.csv": {
+      "bars": 7170,
+      "first": "2026.02.25 23:55:00",
+      "last": "2026.04.02 23:50:00",
+      "sha256": "FAF70432E2A040A629B04107B919720A781535F2B9B73E45CB67D1DE3A647F7E"
+    },
+    "2026_MAY_M15.csv": {
+      "bars": 2475,
+      "first": "2026.04.27 23:45:00",
+      "last": "2026.06.03 23:30:00",
+      "sha256": "910D5E5211DEB6F367DF9363E658E55DD044461317B7294EF9B5BD25EF743628"
+    },
+    "2026_MAY_M5.csv": {
+      "bars": 7418,
+      "first": "2026.04.27 23:55:00",
+      "last": "2026.06.03 23:50:00",
+      "sha256": "F5C8E8087139129D1BC6E0CBD3BA96FB9CAB99CF7870E28D2021E93EB7FCB281"
+    },
+    "AUGUST_M15.csv": {
+      "bars": 2484,
+      "first": "2026.07.28 23:45:00",
+      "last": "2026.09.03 23:30:00",
+      "sha256": "4474DF0AAA0484141EFC8CDDD297BCE8153DF8C280D9E0EADCE377E017A13D00"
+    },
+    "AUGUST_M5.csv": {
+      "bars": 7447,
+      "first": "2026.07.28 23:55:00",
+      "last": "2026.09.03 23:50:00",
+      "sha256": "731468E39454AB477DC083988A7E36D54FFF26F7CB2EC8B1FB48143FAE55319A"
+    }
+  },
+  "ordinary_terminal_cross_check": {
+    "purpose": "cross-check only; not used for charts because its M5 history starts at 2025-04-23",
+    "overlapping_m5_bars": 31200,
+    "identical_ohlc_bars": 31200,
+    "match_rate_pct": 100.0
+  },
+  "created_at_utc": "2026-09-21T00:13:23.202031+00:00"
+}

@@ -1,0 +1,6 @@
+﻿month,ledger,routes,valid_candidates,virtual_fills,closed_trades,wins,losses,win_rate_pct,net_usd,profit_factor,avg_mfe_r,avg_mae_r,ambiguous_paths,capital_basis_usd,ending_balance_sum_usd,duplicate_groups
+ALL,A,A_HEALTHY_FIRST_RESUME,72,71,71,16,55,22.54,-443.34,0.8201,1.5363,-0.8691,0,60000.0,59556.66,0
+ALL,B,B_COMPLEX_H2_L2,29,29,29,5,24,17.24,-331.86,0.7044,1.3717,-0.9757,0,60000.0,59668.14,0
+ALL,C,C_KEY_LOCATION_FAILURE,88,87,87,19,68,21.84,-503.13,0.8364,1.4423,-0.8866,0,60000.0,59496.87,0
+ALL,D,,0,0,0,0,0,0.0,0,0,0,0,0,60000.0,60000.0,0
+ALL,COMBINED,A_HEALTHY_FIRST_RESUME;B_COMPLEX_H2_L2,101,99,99,21,78,21.21,-778.78,0.7803,1.4964,-0.899,0,60000.0,59221.22,88

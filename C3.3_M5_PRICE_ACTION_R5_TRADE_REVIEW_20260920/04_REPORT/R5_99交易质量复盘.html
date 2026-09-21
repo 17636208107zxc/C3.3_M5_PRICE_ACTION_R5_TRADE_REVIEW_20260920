@@ -1,0 +1,297 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>R5 99笔交易质量复盘</title>
+    <style>
+    body{font-family:'Microsoft YaHei',sans-serif;margin:0;background:#f5f7fb;color:#172033;line-height:1.65} main{max-width:1500px;margin:auto;padding:28px}
+    h1,h2,h3{color:#102a43} h2{margin-top:42px;border-bottom:2px solid #d9e2ec;padding-bottom:8px} .cards{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    .card{background:white;border-radius:10px;padding:14px;box-shadow:0 2px 10px #d9e2ec} .card span{display:block;color:#627d98;font-size:13px} .card strong{font-size:25px}
+    .notice{background:#fff7e6;border-left:5px solid #f0a202;padding:14px 18px;margin:20px 0} .grid3,.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .panel,.case{background:white;border-radius:10px;padding:18px;margin:16px 0;box-shadow:0 2px 10px #d9e2ec} .case img{width:100%;height:auto;border:1px solid #d9e2ec}
+    .tri>div{background:#f8fafc;padding:12px;border-radius:8px} .human{border:2px dashed #829ab1;padding:12px;margin-top:12px} .choice{display:inline-block;margin:4px 12px 4px 0}
+    .muted{color:#627d98} input{padding:9px;width:360px;border:1px solid #bcccdc;border-radius:6px} .table-wrap{overflow:auto;max-height:720px;background:white}
+    table{border-collapse:collapse;width:100%;font-size:12px} th{position:sticky;top:0;background:#243b53;color:white;cursor:pointer} th,td{padding:7px;border:1px solid #d9e2ec;white-space:nowrap} tr:nth-child(even){background:#f0f4f8}
+    @media(max-width:1000px){.cards,.grid3,.tri{grid-template-columns:1fr 1fr}} @media print{.case{break-inside:avoid} input{display:none}}
+    </style></head><body><main>
+    <h1>R5 99笔虚拟交易质量复盘</h1>
+    <p>版本：C3.3-M5_PRICE_ACTION-R5；复盘只读取既有账本、日志和原测试器行情，没有修改EA源码、RR参数或样本。</p>
+    <div class="notice"><b>机械核查与人工判断分开：</b>“机械通过”只表示R5五条规则、生命周期、权限、计划数学和去重记录一致；它不代表您人工一定会在该位置开仓。20笔详细案例均保留人工选择栏。</div>
+    <div class="cards"><div class="card"><span>组合账本成交</span><strong>99笔</strong></div><div class="card"><span>五条规则日志链</span><strong>99笔通过</strong></div><div class="card"><span>信号位置待人工</span><strong>69笔</strong></div><div class="card"><span>目标先触及</span><strong>21笔</strong></div><div class="card"><span>SL先触及</span><strong>78笔</strong></div><div class="card"><span>止损前MFE≥2R</span><strong>13笔</strong></div></div>
+    <h2>普通人能看懂的结论</h2>
+    <div class="panel"><p>99笔都能与2R去重组合账本逐笔对应，没有重复或遗漏。程序可以核查规则和数字，但最终“这一笔是否会开”仍需您看图确认。</p>
+    <p>五条规则的程序日志链 99 笔全部自洽；其中 69 笔带有“信号位置待人工判断”标记，主要是信号K出现时M5仍显示反向回调状态，或属于M15与M5分歧的战术环境。这个标记不等于判定违规。</p>
+    <p>当前能够直接确认的是：无重复成交、没有未来数据倒置信号、A/B阶段与2R计划数学一致。当前不能由程序替您确认的是：反向回调在该刻究竟仍属正常回调，还是已经演变成独立反向趋势；这正是20张图和人工选择栏要解决的问题。</p>
+    <p>实际目标距离范围 2.01R 至 46.50R，中位数 2.69R；最低RR为2R并不等于TP固定为2R。</p>
+    <p>5 笔实际TP达到10R以上，最大46.50R。这些数值的方向和公式正确，但属于结构止损很近、远端目标很远的计划，已单列供人工核对目标结构是否符合看盘习惯。</p>
+    <p>止损交易中，有 30 笔曾达到1R MFE，有 13 笔曾达到2R MFE。这里只列为退出管理观察样本，不认定退出程序错误。</p></div>
+    <div class="grid3"><div class="panel"><h3>信号机械核查</h3><ul><li>机械规则通过，需人工看图：69笔</li><li>机械规则通过：30笔</li></ul></div><div class="panel"><h3>计划机械核查</h3><ul><li>计划计算通过：98笔</li><li>计划计算通过，需人工核对位置：1笔</li></ul></div><div class="panel"><h3>问题归类</h3><ul><li>入场信号位置待人工判断：69笔</li><li>机械规则与计划均通过但亏损：26笔</li><li>机械规则与计划均通过且盈利：4笔</li></ul></div></div>
+    <h2>五条人工规则的程序证据</h2><div class="table-wrap"><table id="ruleTable"><thead><tr><th>规则</th><th>程序通过</th><th>程序异常</th><th>解释</th></tr></thead><tbody><tr><td>规则1 结构/权限门禁</td><td>99</td><td>0</td><td>程序日志与R5实现一致；是否符合人工看盘仍以图上复核为准</td></tr><tr><td>规则2 健康与复杂回调</td><td>99</td><td>0</td><td>程序日志与R5实现一致；是否符合人工看盘仍以图上复核为准</td></tr><tr><td>规则3 信号K闭合后及时入场</td><td>99</td><td>0</td><td>程序日志与R5实现一致；是否符合人工看盘仍以图上复核为准</td></tr><tr><td>规则4 最多两次真实机会</td><td>99</td><td>0</td><td>程序日志与R5实现一致；是否符合人工看盘仍以图上复核为准</td></tr><tr><td>规则5 2R对照口径</td><td>99</td><td>0</td><td>程序日志与R5实现一致；是否符合人工看盘仍以图上复核为准</td></tr></tbody></table></div>
+    <h2>Route独立影子账本与去重组合</h2><p>99笔来自2R去重组合账本。C候选在独立账本保留，但相同机会在组合账本由A/B优先归属；D在2R最终账本无合格交易。</p><div class="table-wrap"><table id="routeTable"><thead><tr><th>账本</th><th>Route</th><th>合格候选</th><th>虚拟交易</th><th>盈利</th><th>亏损</th><th>胜率%</th><th>净盈亏美元</th><th>平均MFE R</th><th>平均MAE R</th></tr></thead><tbody><tr><td>A</td><td>A_HEALTHY_FIRST_RESUME</td><td>72</td><td>71</td><td>16</td><td>55</td><td>22.54</td><td>-443.34</td><td>1.5363</td><td>-0.8691</td></tr><tr><td>B</td><td>B_COMPLEX_H2_L2</td><td>29</td><td>29</td><td>5</td><td>24</td><td>17.24</td><td>-331.86</td><td>1.3717</td><td>-0.9757</td></tr><tr><td>C</td><td>C_KEY_LOCATION_FAILURE</td><td>88</td><td>87</td><td>19</td><td>68</td><td>21.84</td><td>-503.13</td><td>1.4423</td><td>-0.8866</td></tr><tr><td>D</td><td></td><td>0</td><td>0</td><td>0</td><td>0</td><td>0.0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>COMBINED</td><td>A_HEALTHY_FIRST_RESUME;B_COMPLEX_H2_L2</td><td>101</td><td>99</td><td>21</td><td>78</td><td>21.21</td><td>-778.78</td><td>1.4964</td><td>-0.899</td></tr></tbody></table></div>
+    <h2>20笔冻结样本详细复盘</h2><p>样本在看图和形成质量结论之前按Route、方向、A1/A2、盈亏、多次尝试、MFE路径、成交延迟和战术环境冻结。</p>
+    
+        <section class="case" id="S01">
+          <h3>S01 / T008｜2025.04.08 01:30:00｜BUY｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：M15与M5分歧的战术局部趋势</p>
+          <img src="../03_CHARTS/TRADES/S01_T008.png" alt="S01交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>M15与M5分歧的战术局部趋势</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 2985.85 / SL 2962.10 / Target 3033.97 / 实际TP 2.03R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 96.24美元；MFE 2.07R；MAE -0.66R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S02">
+          <h3>S02 / T012｜2025.04.23 19:55:00｜SELL｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|SELL|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S02_T012.png" alt="S02交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3297.69 / SL 3307.69 / Target 3269.24 / 实际TP 2.85R</p></div>
+            <div><h4>3. 实际结果</h4><p>曾达到1R以上MFE后最终止损；只说明需要检查管理，不证明退出错误</p><p>净盈亏 -40.00美元；MFE 1.97R；MAE -1.03R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S03">
+          <h3>S03 / T017｜2025.04.28 18:40:00｜SELL｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|SELL|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S03_T017.png" alt="S03交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3322.49 / SL 3337.96 / Target 3286.87 / 实际TP 2.30R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -46.41美元；MFE 0.21R；MAE -1.01R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S04">
+          <h3>S04 / T018｜2025.04.28 20:55:01｜SELL｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|SELL|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S04_T018.png" alt="S04交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3335.67 / SL 3341.94 / Target 3319.02 / 实际TP 2.66R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -43.89美元；MFE 0.24R；MAE -1.00R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S05">
+          <h3>S05 / T019｜2025.04.30 07:45:00｜BUY｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|BUY|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S05_T019.png" alt="S05交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3306.08 / SL 3299.49 / Target 3322.74 / 实际TP 2.53R</p></div>
+            <div><h4>3. 实际结果</h4><p>曾达到1R以上MFE后最终止损；只说明需要检查管理，不证明退出错误</p><p>净盈亏 -46.13美元；MFE 1.30R；MAE -1.05R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S06">
+          <h3>S06 / T021｜2025.09.03 02:50:00｜BUY｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|BUY|WIN</p>
+          <img src="../03_CHARTS/TRADES/S06_T021.png" alt="S06交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3528.93 / SL 3524.31 / Target 3539.99 / 实际TP 2.39R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 110.60美元；MFE 2.43R；MAE -0.19R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S07">
+          <h3>S07 / T022｜2025.09.03 03:10:01｜BUY｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|BUY|WIN</p>
+          <img src="../03_CHARTS/TRADES/S07_T022.png" alt="S07交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p></p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3530.55 / SL 3526.03 / Target 3539.99 / 实际TP 2.09R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 103.84美元；MFE 2.12R；MAE -0.10R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S08">
+          <h3>S08 / T023｜2025.09.04 21:10:00｜BUY｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|BUY|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S08_T023.png" alt="S08交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3544.73 / SL 3540.34 / Target 3555.44 / 实际TP 2.44R</p></div>
+            <div><h4>3. 实际结果</h4><p>曾达到1R以上MFE后最终止损；只说明需要检查管理，不证明退出错误</p><p>净盈亏 -48.29美元；MFE 1.43R；MAE -1.01R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S09">
+          <h3>S09 / T024｜2025.09.08 08:05:00｜BUY｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|BUY|WIN</p>
+          <img src="../03_CHARTS/TRADES/S09_T024.png" alt="S09交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 3583.16 / SL 3578.86 / Target 3594.33 / 实际TP 2.60R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 122.87美元；MFE 2.61R；MAE -0.39R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S10">
+          <h3>S10 / T038｜2026.03.06 19:05:00｜SELL｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：同一setup多次入场尝试</p>
+          <img src="../03_CHARTS/TRADES/S10_T038.png" alt="S10交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p></p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 5133.40 / SL 5150.33 / Target 5072.22 / 实际TP 3.61R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -33.86美元；MFE 0.25R；MAE -1.01R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S11">
+          <h3>S11 / T039｜2026.03.06 21:25:00｜SELL｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：同一setup多次入场尝试</p>
+          <img src="../03_CHARTS/TRADES/S11_T039.png" alt="S11交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 5167.92 / SL 5176.60 / Target 5134.72 / 实际TP 3.82R</p></div>
+            <div><h4>3. 实际结果</h4><p>曾达到2R以上MFE后最终止损；只说明需要检查管理，不证明退出错误</p><p>净盈亏 -43.40美元；MFE 2.04R；MAE -2.78R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S12">
+          <h3>S12 / T051｜2026.03.17 19:55:00｜SELL｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|SELL|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S12_T051.png" alt="S12交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p></p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 5000.53 / SL 5007.86 / Target 4984.02 / 实际TP 2.25R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -43.98美元；MFE 0.07R；MAE -1.02R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S13">
+          <h3>S13 / T053｜2026.03.20 07:10:00｜SELL｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|SELL|WIN</p>
+          <img src="../03_CHARTS/TRADES/S13_T053.png" alt="S13交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p></p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4718.14 / SL 4737.87 / Target 4639.60 / 实际TP 3.98R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 157.08美元；MFE 3.99R；MAE -0.85R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S14">
+          <h3>S14 / T059｜2026.03.25 07:35:00｜SELL｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：止损前MFE最高且达到2R</p>
+          <img src="../03_CHARTS/TRADES/S14_T059.png" alt="S14交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p></p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4571.36 / SL 4576.65 / Target 4455.98 / 实际TP 21.81R</p></div>
+            <div><h4>3. 实际结果</h4><p>曾达到2R以上MFE后最终止损；只说明需要检查管理，不证明退出错误</p><p>净盈亏 -47.61美元；MFE 8.13R；MAE -1.00R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S15">
+          <h3>S15 / T066｜2026.03.30 19:50:00｜SELL｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|SELL|WIN</p>
+          <img src="../03_CHARTS/TRADES/S15_T066.png" alt="S15交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4541.77 / SL 4550.74 / Target 4515.85 / 实际TP 2.89R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 129.60美元；MFE 2.91R；MAE -0.26R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S16">
+          <h3>S16 / T069｜2026.05.01 10:15:00｜BUY｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|BUY|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S16_T069.png" alt="S16交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4596.17 / SL 4588.15 / Target 4616.14 / 实际TP 2.49R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -48.12美元；MFE 0.24R；MAE -1.03R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S17">
+          <h3>S17 / T070｜2026.05.01 11:35:00｜BUY｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：确认后成交延伸较远:0.29R</p>
+          <img src="../03_CHARTS/TRADES/S17_T070.png" alt="S17交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过，需人工核对位置</b></p><p>成交相对信号收盘延伸0.29R</p><p>Entry 4572.05 / SL 4571.49 / Target 4598.09 / 实际TP 46.50R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -49.28美元；MFE 0.12R；MAE -1.20R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S18">
+          <h3>S18 / T074｜2026.05.12 09:05:00｜SELL｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|SELL|WIN</p>
+          <img src="../03_CHARTS/TRADES/S18_T074.png" alt="S18交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4706.87 / SL 4721.94 / Target 4667.56 / 实际TP 2.61R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 117.93美元；MFE 2.62R；MAE -0.32R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S19">
+          <h3>S19 / T083｜2026.08.10 12:45:00｜BUY｜A_HEALTHY_FIRST_RESUME</h3>
+          <p class="muted">抽样理由：固定分层:A_HEALTHY_FIRST_RESUME|BUY|LOSS</p>
+          <img src="../03_CHARTS/TRADES/S19_T083.png" alt="S19交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>信号时M5状态仍处于反向回调/未翻向，需人工判断恢复位置</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4344.37 / SL 4338.52 / Target 4356.65 / 实际TP 2.10R</p></div>
+            <div><h4>3. 实际结果</h4><p>未达到1R MFE即触及结构止损</p><p>净盈亏 -46.80美元；MFE 0.16R；MAE -1.01R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+        <section class="case" id="S20">
+          <h3>S20 / T087｜2026.08.14 11:55:00｜BUY｜B_COMPLEX_H2_L2</h3>
+          <p class="muted">抽样理由：固定分层:B_COMPLEX_H2_L2|BUY|WIN</p>
+          <img src="../03_CHARTS/TRADES/S20_T087.png" alt="S20交易图">
+          <div class="tri">
+            <div><h4>1. 入场信号</h4><p><b>机械规则通过，需人工看图</b></p><p>Route、生命周期、权限、因果链和去重检查通过</p><p>M15与M5分歧的战术局部趋势</p></div>
+            <div><h4>2. 交易计划</h4><p><b>计划计算通过</b></p><p>SL/Target方向、风险距离和成交时RR检查通过</p><p>Entry 4346.96 / SL 4340.83 / Target 4363.58 / 实际TP 2.71R</p></div>
+            <div><h4>3. 实际结果</h4><p>实际目标先触及</p><p>净盈亏 132.96美元；MFE 2.71R；MAE -0.14R</p></div>
+          </div>
+          <div class="human"><h4>人工最终判断</h4><p><span class="choice">□ 我会在这个位置开仓</span> <span class="choice">□ 我认可方向，但会继续等待</span> <span class="choice">□ 我认可方向，但认为入场已经太晚</span> <span class="choice">□ 这个位置我不会交易</span> <span class="choice">□ 需要进一步查看前后行情</span></p><p>我实际会选择的信号K：________________　入场方式：________________</p><p>理由：________________________________________________________________________________</p></div>
+        </section>
+    <h2>人工重点案例</h2>
+        <section class="case"><h3>第3笔：局部空头与反弹SELL</h3>
+        <p>人工参考时间：2026.08.11 17:10:00；原12笔方向：BUY；本案例复核方向：SELL。ENTRY_READY事件 0 个，2R组合候选 0 个。<b>保留事实：该人工关注位置没有形成2R合格交易。</b></p>
+        <p><b>R5原始诊断结论：</b>结构门禁仍在生效；结构或计划不完整时没有强行生成SELL。</p>
+        <img src="../03_CHARTS/FOCUS/focus_3.png" alt="重点案例3">
+        </section>
+        <section class="case"><h3>第5笔：正常回调首次恢复</h3>
+        <p>人工参考时间：2026.08.17 11:55:00；原12笔方向：BUY；本案例复核方向：BUY。ENTRY_READY事件 3 个，2R组合候选 1 个。</p>
+        <p><b>R5原始诊断结论：</b>11:10健康回调强吞没进入ENTRY_READY；2R计划未通过，较低RR研究账本仍保留。</p>
+        <img src="../03_CHARTS/FOCUS/focus_5.png" alt="重点案例5">
+        </section>
+        <section class="case"><h3>第7笔：弱恢复与后续强恢复</h3>
+        <p>人工参考时间：2026.08.24 07:35:00；原12笔方向：BUY；本案例复核方向：BUY。ENTRY_READY事件 3 个，2R组合候选 0 个。</p>
+        <p><b>R5原始诊断结论：</b>弱恢复没有生成2R对照候选；后续较强信号被独立审核。</p>
+        <img src="../03_CHARTS/FOCUS/focus_7.png" alt="重点案例7">
+        </section>
+        <section class="case"><h3>第8笔：第二次测试</h3>
+        <p>人工参考时间：2026.08.24 10:50:00；原12笔方向：BUY；本案例复核方向：BUY。ENTRY_READY事件 3 个，2R组合候选 0 个。<b>保留事实：该人工关注位置没有形成2R合格交易。</b></p>
+        <p><b>R5原始诊断结论：</b>10:50首次恢复保持观察；11:25形成二次测试；11:40强吞没进入Route B计划审核，但连1R空间门槛也未通过。</p>
+        <img src="../03_CHARTS/FOCUS/focus_8.png" alt="重点案例8">
+        </section>
+        <section class="case"><h3>第9笔：反弹失败SELL</h3>
+        <p>人工参考时间：2026.08.28 18:55:00；原12笔方向：SELL；本案例复核方向：SELL。ENTRY_READY事件 15 个，2R组合候选 0 个。<b>保留事实：该人工关注位置没有形成2R合格交易。</b></p>
+        <p><b>R5原始诊断结论：</b>反弹生命周期持续跟踪；价格或目标空间不合适时计划仍被门禁拒绝。</p>
+        <img src="../03_CHARTS/FOCUS/focus_9.png" alt="重点案例9">
+        </section>
+        <section class="case"><h3>第10笔：浅回调追空检查</h3>
+        <p>人工参考时间：2026.08.28 19:50:00；原12笔方向：SELL；本案例复核方向：SELL。ENTRY_READY事件 4 个，2R组合候选 0 个。</p>
+        <p><b>R5原始诊断结论：</b>没有使用旧EMA方向绕过门禁；每个计划仍要求生命周期到达ENTRY_READY。</p>
+        <img src="../03_CHARTS/FOCUS/focus_10.png" alt="重点案例10">
+        </section>
+        <section class="case"><h3>第12笔：强反向推动后的权限</h3>
+        <p>人工参考时间：2026.08.31 08:00:00；原12笔方向：SELL；本案例复核方向：BOTH。ENTRY_READY事件 1 个，2R组合候选 0 个。</p>
+        <p><b>R5原始诊断结论：</b>旧SELL权限已暂停；反向BUY仍要求可审计结构和Route信号。</p>
+        <img src="../03_CHARTS/FOCUS/focus_12.png" alt="重点案例12">
+        </section>
+    <h2>99笔完整可筛选索引</h2><p><input id="filter" placeholder="输入时间、Route、方向、结论等关键词筛选"></p>
+    <div class="table-wrap"><table id="tradeTable"><thead><tr><th>编号</th><th>成交时间</th><th>方向</th><th>Route</th><th>机会</th><th>M15</th><th>M5</th><th>信号核查</th><th>计划核查</th><th>实际TP R</th><th>MFE R</th><th>MAE R</th><th>净盈亏</th><th>退出</th><th>问题归类</th></tr></thead><tbody><tr><td>T001</td><td>2025.03.06 06:55:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1433</td><td>1.4270</td><td>-1.0112</td><td>-49.84</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T002</td><td>2025.03.06 14:00:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>3.2578</td><td>0.2031</td><td>-1.0586</td><td>-46.08</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T003</td><td>2025.03.26 06:00:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.3995</td><td>0.0000</td><td>-1.0082</td><td>-47.84</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T004</td><td>2025.03.26 08:30:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.2335</td><td>2.2562</td><td>-0.1612</td><td>108.10</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T005</td><td>2025.03.26 13:40:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>2.5042</td><td>2.0390</td><td>-1.0028</td><td>-46.67</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T006</td><td>2025.03.27 16:55:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.2356</td><td>2.3775</td><td>-0.1593</td><td>100.20</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T007</td><td>2025.04.07 21:30:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0202</td><td>0.1353</td><td>-1.0047</td><td>-45.01</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T008</td><td>2025.04.08 01:30:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0261</td><td>2.0745</td><td>-0.6611</td><td>96.24</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T009</td><td>2025.04.08 14:40:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.9151</td><td>0.2989</td><td>-1.0129</td><td>-48.78</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T010</td><td>2025.04.17 09:35:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>7.3444</td><td>0.9389</td><td>-1.0000</td><td>-48.60</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T011</td><td>2025.04.23 13:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.1379</td><td>1.3106</td><td>-1.0044</td><td>-48.23</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T012</td><td>2025.04.23 19:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.8450</td><td>1.9710</td><td>-1.0340</td><td>-40.00</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T013</td><td>2025.04.23 22:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1577</td><td>1.2158</td><td>-1.0060</td><td>-47.04</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T014</td><td>2025.04.24 06:15:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.7833</td><td>2.0439</td><td>-1.0038</td><td>-39.60</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T015</td><td>2025.04.28 01:25:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>8.3585</td><td>0.1709</td><td>-1.0504</td><td>-46.41</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T016</td><td>2025.04.28 14:30:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.7814</td><td>0.2561</td><td>-1.0082</td><td>-42.91</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T017</td><td>2025.04.28 18:40:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.3025</td><td>0.2114</td><td>-1.0097</td><td>-46.41</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T018</td><td>2025.04.28 20:55:01</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.6555</td><td>0.2440</td><td>-1.0032</td><td>-43.89</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T019</td><td>2025.04.30 07:45:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.5281</td><td>1.3020</td><td>-1.0531</td><td>-46.13</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T020</td><td>2025.09.02 10:05:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.2254</td><td>0.3201</td><td>-1.0189</td><td>-47.52</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T021</td><td>2025.09.03 02:50:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.3939</td><td>2.4286</td><td>-0.1948</td><td>110.60</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T022</td><td>2025.09.03 03:10:01</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>2.0885</td><td>2.1239</td><td>-0.1040</td><td>103.84</td><td>TARGET</td><td>机械规则与计划均通过且盈利</td></tr><tr><td>T023</td><td>2025.09.04 21:10:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.4396</td><td>1.4305</td><td>-1.0091</td><td>-48.29</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T024</td><td>2025.09.08 08:05:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.5977</td><td>2.6140</td><td>-0.3860</td><td>122.87</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T025</td><td>2025.09.09 18:25:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.4363</td><td>0.6974</td><td>-1.1967</td><td>-43.32</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T026</td><td>2025.09.09 20:15:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0556</td><td>2.0596</td><td>-0.2818</td><td>91.02</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T027</td><td>2025.09.15 06:20:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>4.2730</td><td>0.1523</td><td>-1.0115</td><td>-48.72</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T028</td><td>2025.09.15 12:10:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1296</td><td>1.6587</td><td>-1.0086</td><td>-50.93</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T029</td><td>2025.09.15 17:20:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.0983</td><td>0.0000</td><td>-1.0000</td><td>-47.30</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T030</td><td>2025.09.16 19:50:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.4659</td><td>1.0295</td><td>-1.0203</td><td>-48.87</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T031</td><td>2025.09.17 06:15:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>3.3416</td><td>0.9800</td><td>-1.0150</td><td>-48.12</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T032</td><td>2025.09.19 08:25:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>3.7674</td><td>2.6867</td><td>-1.0319</td><td>-47.97</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T033</td><td>2025.09.24 01:15:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0366</td><td>0.3760</td><td>-1.0116</td><td>-48.08</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T034</td><td>2026.03.03 03:05:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>2.0980</td><td>0.8934</td><td>-1.0341</td><td>-37.54</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T035</td><td>2026.03.05 02:30:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>31.8029</td><td>3.4234</td><td>-1.0511</td><td>-49.32</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T036</td><td>2026.03.05 10:05:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.9423</td><td>2.0488</td><td>-1.0055</td><td>-45.05</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T037</td><td>2026.03.06 07:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.5975</td><td>2.8075</td><td>-0.4486</td><td>125.07</td><td>TARGET</td><td>机械规则与计划均通过且盈利</td></tr><tr><td>T038</td><td>2026.03.06 19:05:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.6137</td><td>0.2481</td><td>-1.0053</td><td>-33.86</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T039</td><td>2026.03.06 21:25:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>3.8249</td><td>2.0403</td><td>-2.7776</td><td>-43.40</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T040</td><td>2026.03.10 06:35:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.3166</td><td>0.7892</td><td>-1.0077</td><td>-46.88</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T041</td><td>2026.03.11 09:30:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>2.4223</td><td>0.0000</td><td>-1.0300</td><td>-45.28</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T042</td><td>2026.03.11 19:15:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1874</td><td>0.7719</td><td>-1.1025</td><td>-43.32</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T043</td><td>2026.03.13 05:25:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>5.1603</td><td>5.2494</td><td>-0.3377</td><td>189.33</td><td>TARGET</td><td>机械规则与计划均通过且盈利</td></tr><tr><td>T044</td><td>2026.03.13 08:45:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>3.6672</td><td>3.1228</td><td>-1.0275</td><td>-37.14</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T045</td><td>2026.03.13 08:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>5.4365</td><td>0.1073</td><td>-1.0000</td><td>-48.66</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T046</td><td>2026.03.16 05:35:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.2483</td><td>0.9352</td><td>-1.0060</td><td>-46.88</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T047</td><td>2026.03.16 07:40:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1449</td><td>1.5735</td><td>-1.0021</td><td>-48.30</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T048</td><td>2026.03.16 15:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.6536</td><td>0.5617</td><td>-1.0033</td><td>-45.75</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T049</td><td>2026.03.16 17:25:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.7439</td><td>2.7653</td><td>-0.0417</td><td>113.16</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T050</td><td>2026.03.16 23:35:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.0469</td><td>1.1946</td><td>-1.0031</td><td>-39.00</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T051</td><td>2026.03.17 19:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.2524</td><td>0.0668</td><td>-1.0246</td><td>-43.98</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T052</td><td>2026.03.19 22:25:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1917</td><td>0.5413</td><td>-1.0014</td><td>-43.30</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T053</td><td>2026.03.20 07:10:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.9807</td><td>3.9899</td><td>-0.8540</td><td>157.08</td><td>TARGET</td><td>机械规则与计划均通过且盈利</td></tr><tr><td>T054</td><td>2026.03.20 08:35:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.7625</td><td>1.7966</td><td>-1.0057</td><td>-45.72</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T055</td><td>2026.03.20 15:25:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.5803</td><td>2.6595</td><td>-0.1100</td><td>125.25</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T056</td><td>2026.03.24 09:45:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.3555</td><td>0.1979</td><td>-1.0000</td><td>-43.26</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T057</td><td>2026.03.24 11:20:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.6500</td><td>0.4574</td><td>-1.0014</td><td>-29.60</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T058</td><td>2026.03.25 06:45:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>11.2934</td><td>4.1229</td><td>-1.0139</td><td>-40.36</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T059</td><td>2026.03.25 07:35:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>21.8110</td><td>8.1342</td><td>-1.0019</td><td>-47.61</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T060</td><td>2026.03.26 07:40:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.4794</td><td>2.5491</td><td>-0.9900</td><td>104.58</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T061</td><td>2026.03.27 05:20:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>8.5626</td><td>0.7401</td><td>-1.0190</td><td>-44.17</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T062</td><td>2026.03.27 20:20:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.7095</td><td>0.5955</td><td>-1.0000</td><td>-46.82</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T063</td><td>2026.03.27 20:40:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>7.2321</td><td>0.4380</td><td>-1.0298</td><td>-42.92</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T064</td><td>2026.03.27 23:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.6878</td><td>2.4874</td><td>-1.0098</td><td>-31.68</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T065</td><td>2026.03.30 07:35:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.0167</td><td>0.1616</td><td>-1.0063</td><td>-47.95</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T066</td><td>2026.03.30 19:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.8896</td><td>2.9097</td><td>-0.2642</td><td>129.60</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T067</td><td>2026.03.31 08:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.4322</td><td>2.4322</td><td>-0.0903</td><td>118.45</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T068</td><td>2026.03.31 21:00:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>4.3083</td><td>0.0734</td><td>-1.0127</td><td>-44.12</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T069</td><td>2026.05.01 10:15:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.4900</td><td>0.2394</td><td>-1.0287</td><td>-48.12</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T070</td><td>2026.05.01 11:35:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过，需人工核对位置</td><td>46.5000</td><td>0.1250</td><td>-1.1964</td><td>-49.28</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T071</td><td>2026.05.01 22:15:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>3.6273</td><td>0.2025</td><td>-1.0015</td><td>-45.64</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T072</td><td>2026.05.07 20:25:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>3.6667</td><td>0.2502</td><td>-1.0142</td><td>-40.05</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T073</td><td>2026.05.08 09:30:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1904</td><td>0.0347</td><td>-1.0028</td><td>-42.39</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T074</td><td>2026.05.12 09:05:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.6085</td><td>2.6184</td><td>-0.3205</td><td>117.93</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T075</td><td>2026.05.12 09:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.9787</td><td>0.9310</td><td>-1.0071</td><td>-39.40</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T076</td><td>2026.05.19 01:55:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>9.5290</td><td>0.2681</td><td>-1.0556</td><td>-45.54</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T077</td><td>2026.05.19 21:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>2.4389</td><td>1.3639</td><td>-1.0110</td><td>-47.48</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T078</td><td>2026.05.22 21:55:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0071</td><td>0.0518</td><td>-1.0143</td><td>-44.80</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T079</td><td>2026.05.26 03:30:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>14.4712</td><td>1.7115</td><td>-1.0385</td><td>-47.84</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T080</td><td>2026.05.26 06:10:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>6.5397</td><td>1.4123</td><td>-1.0420</td><td>-46.69</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T081</td><td>2026.05.28 09:00:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0675</td><td>1.3605</td><td>-1.0423</td><td>-39.72</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T082</td><td>2026.08.06 19:30:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>5.9158</td><td>6.0250</td><td>-0.0737</td><td>269.76</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T083</td><td>2026.08.10 12:45:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.0991</td><td>0.1573</td><td>-1.0085</td><td>-46.80</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T084</td><td>2026.08.11 12:20:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>5.4329</td><td>3.5447</td><td>-1.1318</td><td>-51.00</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T085</td><td>2026.08.11 13:50:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BULL</td><td>机械规则通过</td><td>计划计算通过</td><td>6.1646</td><td>3.6250</td><td>-1.0348</td><td>-50.56</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T086</td><td>2026.08.13 05:40:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.6879</td><td>0.2711</td><td>-1.0301</td><td>-47.80</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T087</td><td>2026.08.14 11:55:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.7113</td><td>2.7113</td><td>-0.1387</td><td>132.96</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T088</td><td>2026.08.17 13:15:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.7276</td><td>1.7312</td><td>-1.2724</td><td>-50.22</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T089</td><td>2026.08.17 22:15:00</td><td>BUY</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BULL</td><td>M5_UNCLEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.7086</td><td>3.0243</td><td>-0.0214</td><td>132.72</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T090</td><td>2026.08.24 21:25:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>3.2145</td><td>0.7157</td><td>-1.0399</td><td>-48.12</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T091</td><td>2026.08.25 06:10:00</td><td>BUY</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BULL</td><td>M5_BEAR</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>9.6504</td><td>0.9528</td><td>-1.0094</td><td>-50.80</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T092</td><td>2026.08.26 18:55:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.5093</td><td>1.5056</td><td>-1.0157</td><td>-43.20</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T093</td><td>2026.08.27 08:30:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_RANGE</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.6471</td><td>2.6836</td><td>-0.4404</td><td>133.20</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T094</td><td>2026.08.27 14:50:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>4.0667</td><td>4.1054</td><td>-0.9287</td><td>183.61</td><td>TARGET</td><td>入场信号位置待人工判断</td></tr><tr><td>T095</td><td>2026.08.27 18:25:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>2.1828</td><td>0.1471</td><td>-1.2002</td><td>-48.95</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T096</td><td>2026.08.27 21:25:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>5.2711</td><td>0.3568</td><td>-1.0061</td><td>-45.71</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T097</td><td>2026.08.28 11:20:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>5.2330</td><td>2.7975</td><td>-1.0097</td><td>-50.47</td><td>STOP</td><td>入场信号位置待人工判断</td></tr><tr><td>T098</td><td>2026.08.28 14:10:00</td><td>SELL</td><td>A_HEALTHY_FIRST_RESUME</td><td>首次恢复</td><td>M15_BEAR</td><td>M5_BEAR</td><td>机械规则通过</td><td>计划计算通过</td><td>3.3265</td><td>0.6831</td><td>-1.0027</td><td>-51.24</td><td>STOP</td><td>机械规则与计划均通过但亏损</td></tr><tr><td>T099</td><td>2026.08.31 14:40:00</td><td>SELL</td><td>B_COMPLEX_H2_L2</td><td>第二次测试</td><td>M15_BEAR</td><td>M5_BULL</td><td>机械规则通过，需人工看图</td><td>计划计算通过</td><td>4.2557</td><td>0.6133</td><td>-1.0000</td><td>-48.10</td><td>STOP</td><td>入场信号位置待人工判断</td></tr></tbody></table></div>
+    <h2>数据来源和限制</h2><div class="panel"><ul>
+      <li>图表行情：Doo Technology Singapore Pte. Ltd. / DooTechnology-Demo / XAUUSD.s，从R5相同便携式MT5测试器逐根导出。</li>
+      <li>图表全部使用真实M5/M15 OHLC；未用状态表拼接K线，也未使用其他经纪商行情。</li>
+      <li>账本使用真实测试tick点差；佣金为0，额外滑点为0，因此净盈亏不能直接视为真实账户收益。</li>
+      <li>MFE/MAE从虚拟成交后开始；图上的成交后行情只用于结果复盘。</li>
+    </ul></div>
+    </main><script>
+    const f=document.getElementById('filter'), rows=document.querySelectorAll('#tradeTable tbody tr');
+    f.addEventListener('input',()=>{const q=f.value.toLowerCase(); rows.forEach(r=>r.style.display=r.innerText.toLowerCase().includes(q)?'':'none')});
+    document.querySelectorAll('th').forEach((th,i)=>th.addEventListener('click',()=>{const tb=th.closest('table').tBodies[0];[...tb.rows].sort((a,b)=>a.cells[i].innerText.localeCompare(b.cells[i].innerText,'zh-CN',{numeric:true})).forEach(r=>tb.appendChild(r))}));
+    </script></body></html>

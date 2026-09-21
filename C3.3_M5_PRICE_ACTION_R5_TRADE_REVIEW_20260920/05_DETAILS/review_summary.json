@@ -1,0 +1,29 @@
+{
+  "trades": 99,
+  "unique_opportunities": 99,
+  "signal_verdicts": {
+    "机械规则通过，需人工看图": 69,
+    "机械规则通过": 30
+  },
+  "plan_verdicts": {
+    "计划计算通过": 98,
+    "计划计算通过，需人工核对位置": 1
+  },
+  "issue_buckets": {
+    "入场信号位置待人工判断": 69,
+    "机械规则与计划均通过但亏损": 26,
+    "机械规则与计划均通过且盈利": 4
+  },
+  "exit_reasons": {
+    "STOP": 78,
+    "TARGET": 21
+  },
+  "stopped_after_mfe_1r": 30,
+  "stopped_after_mfe_2r": 13,
+  "target_r_min": 2.0071,
+  "target_r_median": 2.6879,
+  "target_r_max": 46.5,
+  "five_rule_machine_pass": 99,
+  "signal_positions_needing_human_review": 69,
+  "ledger_reconciliation_pass": 99
+}

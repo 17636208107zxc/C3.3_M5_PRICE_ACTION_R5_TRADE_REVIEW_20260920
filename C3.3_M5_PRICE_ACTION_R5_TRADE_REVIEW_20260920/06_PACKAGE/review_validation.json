@@ -1,0 +1,150 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "check": "99笔索引",
+      "status": "PASS",
+      "detail": 99
+    },
+    {
+      "check": "99个唯一opportunity_id",
+      "status": "PASS",
+      "detail": 99
+    },
+    {
+      "check": "逐笔账本核对",
+      "status": "PASS",
+      "detail": 99
+    },
+    {
+      "check": "20笔冻结样本",
+      "status": "PASS",
+      "detail": 20
+    },
+    {
+      "check": "7个重点案例",
+      "status": "PASS",
+      "detail": [
+        "3",
+        "5",
+        "7",
+        "8",
+        "9",
+        "10",
+        "12"
+      ]
+    },
+    {
+      "check": "第3/8/9笔保留无2R候选事实",
+      "status": "PASS",
+      "detail": {
+        "3": "0",
+        "8": "0",
+        "9": "0"
+      }
+    },
+    {
+      "check": "五条规则机械证据",
+      "status": "PASS",
+      "detail": 99
+    },
+    {
+      "check": "成本限制记录一致",
+      "status": "PASS",
+      "detail": "commission=0, slippage=0"
+    },
+    {
+      "check": "真实tick路径",
+      "status": "PASS",
+      "detail": [
+        "REAL_TICK"
+      ]
+    },
+    {
+      "check": "实际TP均至少2R",
+      "status": "PASS",
+      "detail": 2.0071
+    },
+    {
+      "check": "目标/止损退出合计99",
+      "status": "PASS",
+      "detail": {
+        "TARGET": 21,
+        "STOP": 78
+      }
+    },
+    {
+      "check": "候选因果顺序",
+      "status": "PASS",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "99根信号K均在原测试器M5数据中",
+      "status": "PASS",
+      "detail": 99
+    },
+    {
+      "check": "20张交易图",
+      "status": "PASS",
+      "detail": 20
+    },
+    {
+      "check": "7张重点图",
+      "status": "PASS",
+      "detail": 7
+    },
+    {
+      "check": "PNG分辨率",
+      "status": "PASS",
+      "detail": {
+        "min_width": 2535,
+        "min_height": 1351
+      }
+    },
+    {
+      "check": "HTML图像引用",
+      "status": "PASS",
+      "detail": {
+        "references": 27,
+        "missing": []
+      }
+    },
+    {
+      "check": "HTML人工判断栏",
+      "status": "PASS",
+      "detail": {
+        "checkbox_groups": 20
+      }
+    },
+    {
+      "check": "冻结样本SHA",
+      "status": "PASS",
+      "detail": "622C2E15724256858AC6E43AFF36DE3EB89C95F77D27B2DC21ED11DA15F3FEF9"
+    },
+    {
+      "check": "原测试器行情交叉验证",
+      "status": "PASS",
+      "detail": {
+        "purpose": "cross-check only; not used for charts because its M5 history starts at 2025-04-23",
+        "overlapping_m5_bars": 31200,
+        "identical_ohlc_bars": 31200,
+        "match_rate_pct": 100.0
+      }
+    },
+    {
+      "check": "行情导出器编译",
+      "status": "PASS",
+      "detail": "0 errors, 0 warnings"
+    },
+    {
+      "check": "R5原交付文件未改动",
+      "status": "PASS",
+      "detail": {
+        "checked": 176,
+        "altered": []
+      }
+    }
+  ]
+}
